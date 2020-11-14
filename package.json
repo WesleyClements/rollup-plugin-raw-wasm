@@ -3,7 +3,27 @@
   "version": "0.1.0",
   "description": "A rollup plugin for simply loading raw wasm",
   "main": "dist/index.js",
-  "scripts": {},
+  "types": "typings/index.d.ts",
+  "files": [
+    "dist",
+    "typings",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "rollup",
+    "plugin",
+    "webassembly",
+    "import",
+    "wasm",
+    "wast",
+    "wat",
+    "emscripten"
+  ],
+  "scripts": {
+    "prebuild": "npx del-cli dist",
+    "build": "npx rollup -c"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WesleyClements/rollup-plugin-raw-wasm.git"
@@ -22,5 +42,8 @@
   },
   "peerDependencies": {
     "rollup": "^2.33.2"
+  },
+  "dependencies": {
+    "del-cli": "^3.0.1"
   }
 }
