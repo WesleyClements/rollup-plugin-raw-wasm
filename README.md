@@ -1,13 +1,13 @@
-[npm]: https://img.shields.io/npm/v/@wesley-clements/rollup-plugin-raw-wasm
-[npm-url]: https://www.npmjs.com/package/@wesley-clements/rollup-plugin-raw-wasm
-[size]: https://packagephobia.now.sh/badge?p=@wesley-clements/rollup-plugin-raw-wasm
-[size-url]: https://packagephobia.now.sh/result?p=@wesley-clements/rollup-plugin-raw-wasm
+[npm]: https://img.shields.io/npm/v/@wesleyclements/rollup-plugin-raw-wasm
+[npm-url]: https://www.npmjs.com/package/@wesleyclements/rollup-plugin-raw-wasm
+[size]: https://packagephobia.now.sh/badge?p=@wesleyclements/rollup-plugin-raw-wasm
+[size-url]: https://packagephobia.now.sh/result?p=@wesleyclements/rollup-plugin-raw-wasm
 
 [![npm][npm]][npm-url]
 [![size][size]][size-url]
 [![libera manifesto](https://img.shields.io/badge/libera-manifesto-lightgrey.svg)](https://liberamanifesto.com)
 
-# @wesley-clements/rollup-plugin-raw-wasm
+# @wesleyclements/rollup-plugin-raw-wasm
 
 A Rollup which allows loading `wasm` raw files. This is just [the official Rollup wasm plugin](https://github.com/rollup/plugins/tree/master/packages/wasm) but does not instaniate a WebAssembly module.
 
@@ -20,7 +20,7 @@ This plugin requires an [LTS](https://github.com/nodejs/Release) Node version (v
 Using npm:
 
 ```console
-npm install @wesley-clements/rollup-plugin-raw-wasm --save-dev
+npm install @wesleyclements/rollup-plugin-raw-wasm --save-dev
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ npm install @wesley-clements/rollup-plugin-raw-wasm --save-dev
 Create a `rollup.config.js` [configuration file](https://www.rollupjs.org/guide/en/#configuration-files) and import the plugin:
 
 ```js
-import { rawWasm } from '@wesley-clements/rollup-plugin-raw-wasm';
+import { rawWasm } from '@wesleyclements/rollup-plugin-raw-wasm';
 
 export default {
   ...
