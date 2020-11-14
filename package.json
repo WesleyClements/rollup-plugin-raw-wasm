@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "prebuild": "npx del-cli dist",
-    "build": "npx rollup -c"
+    "build": "npx rollup -c",
+    "prepublish": "npn run build"
   },
   "repository": {
     "type": "git",
