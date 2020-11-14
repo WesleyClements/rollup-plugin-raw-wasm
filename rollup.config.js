@@ -1,20 +1,15 @@
 import typescript from '@rollup/plugin-typescript';
 
-import pkg from './package.json';
-
 export default {
-  input: "src/index.ts",
+  input: 'src/index.ts',
+  external: ['fs/promises', 'crypto'],
   output: [
     {
       format: 'cjs',
-      file: pkg.main,
+      dir: './dist',
       exports: 'named',
-      footer: 'module.exports = Object.assign(exports.default, exports);'
+      footer: 'module.exports = Object.assign(exports.default, exports);',
     },
-    {
-      format: 'esm',
-      file: pkg.module
-    }
   ],
-  plugins: [typescript()]
+  plugins: [typescript()],
 };
