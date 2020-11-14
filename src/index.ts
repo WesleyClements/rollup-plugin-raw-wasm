@@ -13,7 +13,7 @@ export interface RollupRawWasmOptions {
 }
 
 export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
-  const { copy = true, loadMethod = 'fetch', publicPath = '' } = options;
+  const { copy = true, loadMethod = 'fetch', publicPath = '/' } = options;
 
   if (loadMethod !== 'fetch') throw new Error('only fetch is currently supported');
 
@@ -35,8 +35,9 @@ export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
       if (!fileBuffer) throw new Error('failed tp load file ' + id);
       const hash = createHash('sha1').update(fileBuffer).digest('hex').substr(0, 16);
       const filename = `${hash}.wasm`;
-      const path =
-        (/^\//.test(publicPath) ? '' : '/') + publicPath + (/\/$/.test(publicPath) ? '' : '/');
+      const path = /^\/$/.test(publicPath)
+        ? publicPath
+        : (/^\//.test(publicPath) ? '' : '/') + publicPath + (/\/$/.test(publicPath) ? '' : '/');
       files.set(id, {
         filename,
         sourceMap: sourceMapBuffer && {
