@@ -1,5 +1,5 @@
 {
-  "name": "@wesleyclements/rollup-plugin-raw-wasm",
+  "name": "@wesley-clements/rollup-plugin-raw-wasm",
   "version": "0.1.0",
   "description": "A rollup plugin for simply loading raw wasm",
   "main": "dist/index.js",
@@ -22,8 +22,7 @@
   ],
   "scripts": {
     "prebuild": "npx del-cli dist",
-    "build": "npx rollup -c",
-    "prepublish": "npm run build"
+    "build": "npx rollup -c"
   },
   "repository": {
     "type": "git",
