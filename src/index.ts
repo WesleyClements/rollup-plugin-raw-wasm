@@ -6,17 +6,16 @@ import { Plugin } from 'rollup';
 export interface RollupRawWasmOptions {
   /* determines if wasm files will be copied to output dir */
   copy?: boolean;
-  /* determines loading to browser */
-  loadToBrowser?: boolean;
+  /* determines whether to use fetch to load */
+  loadMethod?: 'fetch';
   /* path to which files are output inside the  */
   publicPath?: string;
 }
 
-export function wasm(options: RollupRawWasmOptions = {}): Plugin {
-  const { copy = true, loadToBrowser = true, publicPath = '' } = options;
+export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
+  const { copy = true, loadMethod = 'fetch', publicPath = '' } = options;
 
-  if (!loadToBrowser)
-    throw new Error('loading to platforms other than the browser is not supported');
+  if (loadMethod !== 'fetch') throw new Error('only fetch is currently supported');
 
   const files = new Map();
 
@@ -47,7 +46,14 @@ export function wasm(options: RollupRawWasmOptions = {}): Plugin {
         buffer: fileBuffer,
       });
       if (!copy) return 'export default () => Promise.resolve(null)';
-      if (loadToBrowser) return `export default () => fetch("${path}${filename}")`;
+      switch (loadMethod) {
+        case 'fetch': {
+          return `export default () => fetch("${path}${filename}")`;
+        }
+        default: {
+          throw new Error(loadMethod + ' is not a supported method for loading');
+        }
+      }
     },
     generateBundle: async function () {
       if (!copy) return;
@@ -72,4 +78,4 @@ export function wasm(options: RollupRawWasmOptions = {}): Plugin {
   };
 }
 
-export default wasm;
+export default rawWasm;
