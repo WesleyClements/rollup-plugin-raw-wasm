@@ -6,23 +6,34 @@ import { Plugin } from 'rollup';
 export interface RollupRawWasmOptions {
   /* determines if wasm files will be copied to output dir */
   copy?: boolean;
-  /* determines whether to use fetch to load */
-  loadMethod?: 'fetch';
   /* path to which files are output inside the  */
   publicPath?: string;
 }
 
-export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
-  const { copy = true, loadMethod = 'fetch', publicPath = '/' } = options;
+const LOADER_ID = '\0rawWasmLoader.js';
+const loader = `export function __resolvePath(filePath) {
+  const isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
+  if (isNode) {
+    const path = require("path");
+    return path.resolve(__dirname, filepath);
+  } else return "/"+filepath;
+}`;
 
-  if (loadMethod !== 'fetch') throw new Error('only fetch is currently supported');
+export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
+  const { copy = true, publicPath = '/' } = options;
 
   const files = new Map();
 
   return {
     name: 'raw-wasm',
+    resolveId(id) {
+      return id === LOADER_ID ? id : null;
+    },
 
     load: async function (id) {
+      if (id === LOADER_ID) {
+        return loader;
+      }
       if (!/\.wasm$/.test(id)) {
         return null;
       }
@@ -35,9 +46,8 @@ export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
       if (!fileBuffer) throw new Error('failed tp load file ' + id);
       const hash = createHash('sha1').update(fileBuffer).digest('hex').substr(0, 16);
       const filename = `${hash}.wasm`;
-      const path = /^\/$/.test(publicPath)
-        ? publicPath
-        : (/^\//.test(publicPath) ? '' : '/') + publicPath + (/\/$/.test(publicPath) ? '' : '/');
+      const path =
+        publicPath.substring(/^\//.test(publicPath) ? 1 : 0) + /\/$/.test(publicPath) ? '' : '/';
       files.set(id, {
         filename,
         sourceMap: sourceMapBuffer && {
@@ -46,15 +56,10 @@ export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
         },
         buffer: fileBuffer,
       });
-      if (!copy) return 'export default () => Promise.resolve(null)';
-      switch (loadMethod) {
-        case 'fetch': {
-          return `export default () => fetch("${path}${filename}")`;
-        }
-        default: {
-          throw new Error(loadMethod + ' is not a supported method for loading');
-        }
-      }
+      if (!copy) return '';
+      return `import {__resolvePath} from ${JSON.stringify(
+        LOADER_ID
+      )};export default __resolvePath('${path}${filename}')`;
     },
     generateBundle: async function () {
       if (!copy) return;
