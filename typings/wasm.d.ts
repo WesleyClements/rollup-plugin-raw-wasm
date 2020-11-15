@@ -1,3 +1,4 @@
 declare module '*.wasm' {
-  export default (): Promise<Response> => {};
+  const path: string;
+  export default path;
 }
