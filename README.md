@@ -9,7 +9,7 @@
 
 # @wesley-clements/rollup-plugin-raw-wasm
 
-A Rollup which allows loading `wasm` raw files. This is just [the official Rollup wasm plugin](https://github.com/rollup/plugins/tree/master/packages/wasm) but does not instaniate a WebAssembly module.
+A Rollup which allows loading `wasm` raw paths. This is just [the official Rollup wasm plugin](https://github.com/rollup/plugins/tree/master/packages/wasm) but does not instaniate a WebAssembly module.
 
 ## Requirements
 
@@ -48,18 +48,11 @@ Default: `true`
 
 Determines whether the wasm files will be copied to the output folder.
 
-### `loadMethod`
-
-Type: `String`<br>
-Default: `'fetch'`
-
-Determines which method should be used to load. Possible values: `'fetch'`. **More methods to come**
-
 ### `publicPath`
 
 Type: `String`<br>
 Default: `''`
 
-A string which will be added in front of filenames when they are not inlined but are copied.
+A string which will be added in front of filenames when they are copied.
 
 [LICENSE (MIT)](/LICENSE)
