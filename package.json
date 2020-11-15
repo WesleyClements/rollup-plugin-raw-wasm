@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "A rollup plugin for simply loading raw wasm",
   "main": "dist/index.js",
+  "types": "dist/index.d.js",
   "private": false,
   "files": [
     "dist",
