@@ -55,7 +55,6 @@ export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
         },
         buffer: fileBuffer,
       });
-      if (!copy) return '';
       return `import {__resolvePath} from ${JSON.stringify(
         LOADER_ID
       )};export default __resolvePath('${path}${filename}')`;
