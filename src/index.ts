@@ -46,7 +46,7 @@ export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
       const hash = createHash('sha1').update(fileBuffer).digest('hex').substr(0, 16);
       const filename = `${hash}.wasm`;
       const path =
-        publicPath.substring(/^\//.test(publicPath) ? 1 : 0) + /\/$/.test(publicPath) ? '' : '/';
+        publicPath.substring(/^\//.test(publicPath) ? 1 : 0) + (/\/$/.test(publicPath) ? '' : '/');
       files.set(id, {
         filename,
         sourceMap: sourceMapBuffer && {
