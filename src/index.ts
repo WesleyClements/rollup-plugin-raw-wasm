@@ -14,11 +14,10 @@ const LOADER_ID = '\0rawWasmLoader.js';
 const loader = `export function __resolvePath(filePath) {
   const isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
   if (isNode) {
-    const path = require("path");
-    return path.resolve(__dirname, filepath);
-  } else return "/"+filepath;
+    const path = require('path');
+    return path.resolve(__dirname, filePath);
+  } else return '/' + filePath;
 }`;
-
 export function rawWasm(options: RollupRawWasmOptions = {}): Plugin {
   const { copy = true, publicPath = '/' } = options;
 
